@@ -12,7 +12,7 @@ RUN pip install poetry
 WORKDIR /ledger
 COPY poetry.lock pyproject.toml /ledger/
 
-RUN poetry config virtualenvs.create false && poetry install
+RUN poetry config virtualenvs.create false && poetry install --no-dev
 
 COPY . /ledger
 

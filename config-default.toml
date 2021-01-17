@@ -25,6 +25,6 @@ uri = { env = "DATABASE_URI", optional = true }
 # Otherwise, the below configuration options should be specified
 host = "127.0.0.1"
 port = 5432
-database = "metricity"
+database = "ledger"
 username = "postgres"
 password = "postgres"

@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "ledger"
+version = "0.1.0"
+description = "Data aggregation for Github contributor metrics."
+authors = [
+  "Jeremiah Boby <mail@jeremiahboby.me>",
+  "Joe Banks <joseph@josephbanks.me>",
+  "Xithrius <xithrius@gmail.com>",
+]
+license = "MIT"
+
+[tool.poetry.dependencies]
+python = "^3.8"
+schedule = "^0.6.0"
+SQLAlchemy = "^1.3.22"
+alembic = "^1.4.3"
+
+[tool.poetry.dev-dependencies]
+pytest = "^5.2"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

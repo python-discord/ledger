@@ -1,8 +1,9 @@
+"""Database models for storing data from GitHub."""
 from enum import Enum
 
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, Enum as SQLEnum, Integer, String, DateTime
+from sqlalchemy import Column, DateTime, Enum as SQLEnum, Integer, String
 from sqlalchemy.dialects import postgresql
+from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql.schema import ForeignKey
 from sqlalchemy.sql.sqltypes import Boolean
@@ -12,6 +13,8 @@ Base = declarative_base()
 
 
 class AuthorAssociation(Enum):
+    """The association a user has with an issue or PR on GitHub."""
+
     MEMBER = "member"
     OWNER = "owner"
     MANNEQUIN = "mannequin"
@@ -23,6 +26,8 @@ class AuthorAssociation(Enum):
 
 
 class StatusCheckStatus(Enum):
+    """The possible Continuous Integration states that a PR can have on GitHub."""
+
     EXPECTED = "expected"
     ERROR = "error"
     FAILURE = "failure"
@@ -31,6 +36,8 @@ class StatusCheckStatus(Enum):
 
 
 class User(Base):
+    """A GitHub user."""
+
     __tablename__ = "user"
 
     id = Column(Integer, primary_key=True)
@@ -41,6 +48,8 @@ class User(Base):
 
 
 class Repository(Base):
+    """A GitHub repository."""
+
     __tablename__ = "repository"
 
     id = Column(Integer, primary_key=True)
@@ -48,6 +57,8 @@ class Repository(Base):
 
 
 class IssueMixin:
+    """Generic attributes that are shared by issues and PRs."""
+
     number = Column(String, primary_key=True)
     opened = Column(DateTime, nullable=False)
     closed = Column(DateTime)
@@ -56,12 +67,16 @@ class IssueMixin:
 
 
 class Issue(Base, IssueMixin):
+    """A GitHub issue."""
+
     __tablename__ = "issue"
 
     author = Column(ForeignKey("user.id"), nullable=False)
 
 
 class PullRequest(Base, IssueMixin):
+    """A GitHub Pull Request."""
+
     __tablename__ = "pull_request"
 
     author = Column(ForeignKey("user.id"), nullable=False)

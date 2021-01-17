@@ -1,3 +1,4 @@
+"""Utilities for interacting with the database."""
 from ledger.config import DatabaseConfig
 
 

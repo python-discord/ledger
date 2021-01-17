@@ -12,8 +12,8 @@ RUN pip install poetry
 WORKDIR /ledger
 COPY poetry.lock pyproject.toml /ledger/
 
-RUN poetry config virtualenvs.create false && poetry install
+RUN poetry config virtualenvs.create false && poetry install --no-dev
 
-COPY . /metricity
+COPY . /ledger
 
 CMD ["sh", "-c", "alembic upgrade head && poetry run start"]

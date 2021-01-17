@@ -40,6 +40,7 @@ jobs:
           file: ./Dockerfile
           push: true
           cache-from: type=registry,ref=ghcr.io/python-discord/ledger:latest
+          cache-to: type=inline
           tags: |
             ghcr.io/python-discord/ledger:latest
             ghcr.io/python-discord/ledger:${{ steps.sha_tag.outputs.tag }}

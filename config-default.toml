@@ -1,0 +1,30 @@
+[ledger]
+# Settings specifically about the application.
+
+# The log level to use.
+log_level = "INFO"
+
+# Interval to poll GitHub at (in minutes).
+interval = 30
+
+[github]
+# Configuration related to the GitHub environment that the app obsesrves.
+
+# The GitHub organisation.
+organisation = "python-discord"
+
+# The token to use to communicate with GitHub.
+token = { env = "GITHUB_TOKEN" }
+
+[database]
+# Postgres!
+
+# If a database URI is passed in the "uri" variable it will override any specifics passed
+uri = { env = "DATABASE_URI", optional = true }
+
+# Otherwise, the below configuration options should be specified
+host = "127.0.0.1"
+port = 5432
+database = "metricity"
+username = "postgres"
+password = "postgres"

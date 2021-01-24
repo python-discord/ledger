@@ -28,10 +28,6 @@ client = Client(
 )
 
 
-# result = client.execute(query, variable_values={
-#   "org": GitHubConfig.organisation
-# })
-
 @lru_cache()
 def load_query(name: str) -> DocumentNode:
     """Load a query from the queries folder."""
@@ -47,7 +43,7 @@ def pull_requests(repository_names: list[str]) -> list[dict[str, Any]]:
 
     This automatically handles any pagination.
     """
-    pull_requests = []
+    all_prs = []
 
     for repository in repository_names:
         has_next_page = True
@@ -63,9 +59,36 @@ def pull_requests(repository_names: list[str]) -> list[dict[str, Any]]:
             prs = result["repositoryOwner"]["repository"]["pullRequests"]
             has_next_page = end_cursor = prs["pageInfo"]["endCursor"]
 
-            pull_requests.extend(prs["nodes"])
+            all_prs.extend(prs["nodes"])
 
-    return pull_requests
+    return all_prs
+
+
+def issues(repository_names: list[str]) -> list[dict[str, Any]]:
+    """
+    Run a GraphQL query for all issues in provided repositories.
+
+    This automatically handles any pagination.
+    """
+    issues = []
+
+    for repository in repository_names:
+        has_next_page = True
+        end_cursor = None
+
+        while has_next_page:
+            result = client.execute(load_query("issues"), variable_values={
+                "repo": repository,
+                "org": GitHubConfig.organisation,
+                "issueCursor": end_cursor
+            })
+
+            page_issues = result["repositoryOwner"]["repository"]["issues"]
+            has_next_page = end_cursor = page_issues["pageInfo"]["endCursor"]
+
+            issues.extend(page_issues["nodes"])
+
+    return issues
 
 
 def repos() -> list[str]:

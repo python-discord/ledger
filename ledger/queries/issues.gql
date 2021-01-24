@@ -1,0 +1,37 @@
+query getIssues($org: String!, $repo: String!, $issueCursor: String) {
+  repositoryOwner(login: $org) {
+    repository(name: $repo) {
+      name
+      databaseId
+      issues(first: 50, after: $issueCursor, states: OPEN) {
+        pageInfo {
+          endCursor
+        }
+        nodes {
+          state
+          number
+          createdAt
+          closedAt
+          labels(first: 10) {
+            nodes {
+              name
+            }
+          }
+          authorAssociation
+          author {
+            login
+            ... on User {
+              databaseId
+            }
+          }
+        }
+      }
+    }
+  }
+  rateLimit {
+    limit
+    cost
+    remaining
+    resetAt
+  }
+}

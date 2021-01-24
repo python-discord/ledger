@@ -1,0 +1,50 @@
+query getPullRequests($org: String!, $repo: String!, $pullRequestCursor: String) {
+  repositoryOwner(login: $org) {
+    repository(name: $repo) {
+      name
+      databaseId
+      pullRequests(first: 50, after: $pullRequestCursor, states: OPEN) {
+        pageInfo {
+          endCursor
+        }
+        nodes {
+          state
+          number
+          createdAt
+          closedAt
+          changedFiles
+          additions
+          deletions
+          labels(first: 10) {
+            nodes {
+              name
+            }
+          }
+          authorAssociation
+          author {
+            login
+            ... on User {
+              databaseId
+            }
+          }
+          commits(last: 1) {
+            totalCount
+            nodes {
+              commit {
+                statusCheckRollup {
+                  state
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  rateLimit {
+    limit
+    cost
+    remaining
+    resetAt
+  }
+}

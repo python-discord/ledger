@@ -1,0 +1,13 @@
+query getRepositories($org: String!, $repositoryCursor: String) {
+  repositoryOwner(login: $org) {
+    repositories(privacy: PUBLIC, first: 100, after: $repositoryCursor) {
+      pageInfo {
+        endCursor
+      }
+      nodes {
+        isArchived
+        name
+      }
+    }
+  }
+}

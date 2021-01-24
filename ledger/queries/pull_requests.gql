@@ -3,7 +3,7 @@ query getPullRequests($org: String!, $repo: String!, $pullRequestCursor: String)
     repository(name: $repo) {
       name
       databaseId
-      pullRequests(last: 10, after: $pullRequestCursor, states: OPEN) {
+      pullRequests(first: 50, after: $pullRequestCursor, states: OPEN) {
         pageInfo {
           endCursor
         }

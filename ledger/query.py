@@ -3,9 +3,10 @@ from functools import lru_cache
 from pathlib import Path
 from typing import Any
 
-from graphql import DocumentNode
-from gql import gql, Client
+
+from gql import Client, gql
 from gql.transport.aiohttp import AIOHTTPTransport
+from graphql import DocumentNode
 
 from ledger.config import GitHubConfig
 
@@ -88,5 +89,3 @@ def repos() -> list[str]:
                 repos.append(repo["name"])
 
     return repos
-
-        
